@@ -8,7 +8,8 @@ const UserSchema = new Schema({
     username: { type: String, required: true, unique: true, trim: true },
     email: { type: String, required: true, unique: true, trim: true },
     hash: { type: String, required: true },
-    salt: { type: String, required: true }
+    salt: { type: String, required: true },
+    journals : [{ type: Schema.Types.ObjectId, ref: 'journal' }]
 }, { timestamps: true });
 
 UserSchema.methods.validPassword = (password, hash, salt) => {

@@ -19,12 +19,12 @@ exports.Mutation = {
         const user = UserModel.findOne({ email: args.email });
         const userExec = await user.exec();
         if (!userExec) {
-            return;
+            throw new Error('Email or Password not correct');
         }
         const isValidPwd = userExec.validPassword(args.password, userExec.hash, userExec.salt);
-        if (isValidPwd) {
-            return userExec.toAuthJSON();
+        if (!isValidPwd) {
+            throw new Error('Email or Password not correct');
         }
-        return
+        return userExec.toAuthJSON();
     }
 }

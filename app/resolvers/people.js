@@ -7,5 +7,5 @@ exports.Query = {
 }
 
 exports.Mutation = {
-    
+
 }
