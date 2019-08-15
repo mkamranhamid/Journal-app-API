@@ -1,0 +1,43 @@
+{
+  "name": "graphql-mongo-starter",
+  "version": "1.0.0",
+  "description": "A node project to get started with graphql using mongodb to get up and developing",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "keywords": [
+    "graphql",
+    "mongodb",
+    "getting-started",
+    "starter",
+    "hackathon",
+    "basic"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mkamranhamid/graphql-mongo-starter"
+  },
+  "author": "Kamran Hamid <mkamranhamid@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "crypto": "^1.0.1",
+    "dotenv": "^8.0.0",
+    "express": "^4.17.1",
+    "express-graphql": "^0.9.0",
+    "graphql": "^14.4.2",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.6.9"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^6.2.0",
+    "nodemon": "^1.19.1"
+  },
+  "engines": {
+    "node": ">=10.7.0",
+    "npm": ">=6.5.0"
+  }
+}
