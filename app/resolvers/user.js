@@ -2,10 +2,10 @@ const UserModel = require('../models/User');
 
 exports.Query = {
     id: (root, args, context, info) => {
-        return UserModel.findById(args.id).exec();
+        return UserModel.findById(args.id).populate('journals').exec();
     },
     all: (root, args, context, info) => {
-        return UserModel.find().exec();
+        return UserModel.find().populate('journals').exec();
     }
 }
 
@@ -16,7 +16,7 @@ exports.Mutation = {
         return user.save();
     },
     login: async (root, args, context, info) => {
-        const user = UserModel.findOne({ email: args.email });
+        const user = UserModel.findOne({ email: args.email }).populate('journals');
         const userExec = await user.exec();
         if (!userExec) {
             throw new Error('Email or Password not correct');

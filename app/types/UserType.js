@@ -2,8 +2,9 @@ const {
     GraphQLID,
     GraphQLString,
     GraphQLObjectType,
-    GraphQLSchema
+    GraphQLList
 } = require("graphql");
+const JournalType = require('./JournalType');
 
 const UserType = new GraphQLObjectType({
     name: "User",
@@ -14,6 +15,7 @@ const UserType = new GraphQLObjectType({
         email: { type: GraphQLString },
         username: { type: GraphQLString },
         token: { type: GraphQLString },
+        journals: { type: GraphQLList(JournalType) }
     }
 });
 module.exports = UserType;

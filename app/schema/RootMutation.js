@@ -1,12 +1,15 @@
 const {
     GraphQLString,
     GraphQLNonNull,
+    GraphQLID
 } = require("graphql");
 
 const PersonType = require('../types/PersonType');
 const UserType = require('../types/UserType');
+const JournalType = require('../types/JournalType');
 const PersonResolver = require('../resolvers/person');
 const UserResolver = require('../resolvers/user');
+const JournalResolver = require('../resolvers/journal');
 
 const mutation = {
     person: {
@@ -35,6 +38,30 @@ const mutation = {
             password: { type: GraphQLNonNull(GraphQLString) }
         },
         resolve: UserResolver.Mutation.login
+    },
+    journalCreate: {
+        type: UserType,
+        args: {
+            body: { type: GraphQLNonNull(GraphQLString) },
+            title: { type: GraphQLNonNull(GraphQLString) }
+        },
+        resolve: JournalResolver.Mutation.create
+    },
+    journalDelete: {
+        type: JournalType,
+        args: {
+            id: { type: GraphQLNonNull(GraphQLID) }
+        },
+        resolve: JournalResolver.Mutation.delete
+    },
+    journalUpdate: {
+        type: JournalType,
+        args: {
+            id: { type: GraphQLNonNull(GraphQLID) },
+            body: { type: GraphQLString },
+            title: { type: GraphQLString }
+        },
+        resolve: JournalResolver.Mutation.update
     }
 }
 module.exports = mutation;

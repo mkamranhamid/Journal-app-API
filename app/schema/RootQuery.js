@@ -6,9 +6,11 @@ const {
 
 const PersonType = require('../types/PersonType');
 const UserType = require('../types/UserType');
+const JournalType = require('../types/JournalType');
 const PeopleResolver = require('../resolvers/people');
 const PersonResolver = require('../resolvers/person');
 const UserResolver = require('../resolvers/user');
+const JournalResolver = require('../resolvers/journal');
 
 const query = {
     people: {
@@ -25,6 +27,17 @@ const query = {
     users: {
         type: GraphQLList(UserType),
         resolve: UserResolver.Query.all
+    },
+    journals: {
+        type: GraphQLList(JournalType),
+        resolve: JournalResolver.Query.all
+    },
+    journalsById: {
+        type: JournalType,
+        args: {
+            id: { type: GraphQLNonNull(GraphQLID) }
+        },
+        resolve: JournalResolver.Query.byId
     }
 }
 module.exports = query;

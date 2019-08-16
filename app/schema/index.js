@@ -6,7 +6,6 @@ const {
     GraphQLObjectType,
     GraphQLSchema
 } = require("graphql");
-const PersonType = require('../types/PersonType');
 const RootQuery = require('./RootQuery');
 const RootMutation = require('./RootMutation');
 
