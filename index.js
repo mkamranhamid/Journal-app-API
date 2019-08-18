@@ -9,7 +9,19 @@ const schema = require("./app/schema");
 const isAuth = require("./app/middleware/isAuth");
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 4000;
+
+// CORS
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.header('Access-Control-Allow-Credentials', true);
+    res.setHeader('Access-Control-Allow-Methods', 'POST,GET,OPTIONS');
+    if (req.method == 'OPTIONS') {
+        return res.sendStatus(200);
+    }
+    next();
+});
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -17,7 +29,7 @@ app.use(bodyParser.json());
 dbconnection();
 
 // Authentication middleware
-app.use(isAuth)
+// app.use(isAuth);
 
 // GraphQL
 app.use('/graphql', ExpressGraphQL({

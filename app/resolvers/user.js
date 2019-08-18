@@ -10,7 +10,11 @@ exports.Query = {
 }
 
 exports.Mutation = {
-    create: (root, args, context, info) => {
+    create: async (root, args, context, info) => {
+        const emailExist = await UserModel.findOne({ email: args.email }).exec();
+        if (emailExist && emailExist.email) {
+            return new Error('Email already exist');
+        }
         const user = new UserModel(args);
         user.setPassword(args.password);
         return user.save();
