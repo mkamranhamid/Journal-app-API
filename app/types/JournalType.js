@@ -14,6 +14,7 @@ const JournalType = new GraphQLObjectType({
         id: { type: GraphQLID },
         body: { type: GraphQLString },
         title: { type: GraphQLString },
+        createdAt: { type: GraphQLString },
         userId: {
             type: GraphQLID,
             // type: UserType,

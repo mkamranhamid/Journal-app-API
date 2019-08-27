@@ -1,12 +1,16 @@
 const {
     GraphQLID,
     GraphQLList,
-    GraphQLNonNull
+    GraphQLNonNull,
+    GraphQLString,
+    GraphQLBoolean
 } = require("graphql");
 
 const PersonType = require('../types/PersonType');
 const UserType = require('../types/UserType');
 const JournalType = require('../types/JournalType');
+const UsernameAvailabilityType = require('../types/UsernameAvailabilityType');
+
 const PeopleResolver = require('../resolvers/people');
 const PersonResolver = require('../resolvers/person');
 const UserResolver = require('../resolvers/user');
@@ -38,6 +42,13 @@ const query = {
             id: { type: GraphQLNonNull(GraphQLID) }
         },
         resolve: JournalResolver.Query.byId
+    },
+    usernameAvailability: {
+        type: UsernameAvailabilityType,
+        args: {
+            username: { type: GraphQLNonNull(GraphQLString) }
+        },
+        resolve: UserResolver.Query.usernameAvailability
     }
 }
 module.exports = query;

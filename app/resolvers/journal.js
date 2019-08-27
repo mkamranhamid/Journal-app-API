@@ -8,11 +8,11 @@ exports.Query = {
         }
         return JournalModel.findById(args.id).exec();
     },
-    all: (root, args, context, info) => {
+    all: async (root, args, context, info) => {
         if (!context.isAuth) {
             throw new Error('Unauthenticated user')
         }
-        return JournalModel.find().exec();
+        return JournalModel.find({ userId: context.uid }).exec();
     }
 }
 
@@ -26,9 +26,9 @@ exports.Mutation = {
 
             const journal = new JournalModel(args);
             const savedJournal = await journal.save();
-            const user = await UserModel.findById(args.userId);
+            const user = await UserModel.findById(args.userId).populate('journals');
             user.journals.push(savedJournal);
-            return user.save();
+            return savedJournal;
         } catch (err) {
             console.log('Journal create Mutation: ', err);
             throw new Error('Some error occured while adding journal');

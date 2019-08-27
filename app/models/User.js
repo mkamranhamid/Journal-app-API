@@ -2,6 +2,8 @@ const { Schema, model } = require("mongoose");
 const { pbkdf2Sync, randomBytes } = require('crypto');
 var { sign } = require('jsonwebtoken');
 
+const TokenModel = require('../models/Token');
+
 const UserSchema = new Schema({
     firstname: { type: String, required: true, trim: true },
     lastname: { type: String, required: true, trim: true },
@@ -9,7 +11,7 @@ const UserSchema = new Schema({
     email: { type: String, required: true, unique: true, trim: true },
     hash: { type: String, required: true },
     salt: { type: String, required: true },
-    journals : [{ type: Schema.Types.ObjectId, ref: 'journal' }]
+    journals: [{ type: Schema.Types.ObjectId, ref: 'journal' }]
 }, { timestamps: true });
 
 UserSchema.methods.validPassword = (password, hash, salt) => {
@@ -31,14 +33,21 @@ UserSchema.methods.generateJWT = function () {
     }, process.env.JWT_SECRET);
     return token;
 };
-UserSchema.methods.toAuthJSON = function () {
+UserSchema.methods.toAuthJSON = async function () {
+    const tokenPayload = {
+        userId: this.id,
+        token: this.generateJWT(),
+        status: 'active'
+    }
+    const createToken = new TokenModel(tokenPayload);
+    await createToken.save();
     return {
         id: this.id,
         firstname: this.firstname,
         lastname: this.lastname,
         username: this.username,
         email: this.email,
-        token: this.generateJWT(),
+        token: tokenPayload.token,
     };
 };
 

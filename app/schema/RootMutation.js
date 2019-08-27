@@ -7,6 +7,7 @@ const {
 const PersonType = require('../types/PersonType');
 const UserType = require('../types/UserType');
 const JournalType = require('../types/JournalType');
+const LogoutType = require('../types/LogoutType');
 const PersonResolver = require('../resolvers/person');
 const UserResolver = require('../resolvers/user');
 const JournalResolver = require('../resolvers/journal');
@@ -39,8 +40,12 @@ const mutation = {
         },
         resolve: UserResolver.Mutation.login
     },
+    logout: {
+        type: LogoutType,
+        resolve: UserResolver.Mutation.logout
+    },
     journalCreate: {
-        type: UserType,
+        type: JournalType,
         args: {
             body: { type: GraphQLNonNull(GraphQLString) },
             title: { type: GraphQLNonNull(GraphQLString) }

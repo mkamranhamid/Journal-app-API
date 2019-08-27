@@ -29,7 +29,7 @@ app.use(bodyParser.json());
 dbconnection();
 
 // Authentication middleware
-// app.use(isAuth);
+app.use(isAuth);
 
 // GraphQL
 app.use('/graphql', ExpressGraphQL({
