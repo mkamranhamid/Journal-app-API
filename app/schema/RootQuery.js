@@ -43,6 +43,13 @@ const query = {
         },
         resolve: JournalResolver.Query.byId
     },
+    journalSearch: {
+        type: GraphQLList(JournalType),
+        args: {
+            q: { type: GraphQLNonNull(GraphQLString) }
+        },
+        resolve: JournalResolver.Query.search
+    },
     usernameAvailability: {
         type: UsernameAvailabilityType,
         args: {

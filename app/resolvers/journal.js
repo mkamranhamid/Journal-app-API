@@ -8,6 +8,12 @@ exports.Query = {
         }
         return JournalModel.findById(args.id).exec();
     },
+    search: (root, args, context, info) => {
+        if (!context.isAuth) {
+            throw new Error('Unauthenticated user');
+        }
+        return JournalModel.find({ "title": { "$regex": args.q, "$options": "i" }, userId: context.uid }).exec();
+    },
     all: async (root, args, context, info) => {
         if (!context.isAuth) {
             throw new Error('Unauthenticated user')

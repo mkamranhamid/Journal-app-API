@@ -25,7 +25,8 @@ exports.Mutation = {
         }
         const user = new UserModel(args);
         user.setPassword(args.password);
-        return user.save();
+        const createdUser = user.save();
+        return user.toAuthJSON();
     },
     login: async (root, args, context, info) => {
         try {
